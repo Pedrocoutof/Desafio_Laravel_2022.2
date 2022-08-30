@@ -20,7 +20,7 @@
         <label class='form-label' for="photo">Foto:</label>
         <input class='form-control' type='file' id='photo' name='photo'>
 
-        <button href='./../' type="cancel" class="btn btn-danger mb-3">Cancelar</button>
+        <button href='produtos' class="btn btn-danger mb-3">Cancelar</button>
         <button href='#' type="submit" class="btn btn-primary mb-3">Adicionar</button>
 
     </form>

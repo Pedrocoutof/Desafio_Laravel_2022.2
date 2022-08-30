@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Stock;
+use App\Http\Middleware\Autenticador;
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -28,8 +29,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/users/editar/', [UserController::class, 'edit']);
             Route::post('/users/update/', [UserController::class, 'update']);
             Route::get('/users/delete/', [UserController::class, 'delete']);
-            // Estoque
-            Route::get('adm/estoque', [Stock::class, 'index']);
+
+    // Estoque
+            Route::get('/estoque/', [Stock::class, 'index']);
+            Route::get('/estoque/criando-estoque', [Stock::class, 'create']);
+            Route::post('/estoque/store/', [Stock::class, 'store']);
+            Route::get('/estoque/visualizar/', [Stock::class, 'show']);
+            Route::get('/estoque/editar/', [Stock::class, 'edit']);
+            Route::post('/estoque/editar/update/', [Stock::class, 'update']);
+            Route::get('estoque/delete/', [Stock::class, 'destroy']);
 
 
     Route::get('/', [ProductController::class, 'index'])/*->middleware('auth')*/;

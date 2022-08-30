@@ -2,7 +2,7 @@
     <h1>
         Tabela de Produtos:
     </h1>
-    <a href="produtos/create" class="btn  btn-primary"><i class="me-1 fa fa-heart"></i>Adicionar produto</a>
+    <a href="create" class="btn  btn-primary"><i class="me-1 fa fa-heart"></i>Adicionar produto</a>
     <div class="container">
         <table class="table">
             <thead>

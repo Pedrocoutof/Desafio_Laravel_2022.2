@@ -2,78 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Stock as ModelStock;
 use Illuminate\Http\Request;
 
 class Stock extends Controller
 {
+
     public function index()
     {
-        return view('site.estoque')->with('estoque', \App\Models\Stock::all());
+        return view('site.lista-estoque')->with('estoque', \App\Models\Stock::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $produtos = Product::all();
+        return view('site.criando-estoque')->with('produtos', $produtos);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $stock = new ModelStock;
+
+        $stock->quantidade = $request->input('quantidade');
+        $stock->produto = strtok($request->input('produto'), " ");
+
+        $stock->save();
+
+        return redirect('estoque/');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $estoque = ModelStock::findOrFail($request->id);
+        $produto = Product::findOrFail($estoque->produto);
+
+        return view('site.visualiza-estoque', [
+            'estoque'=> $estoque,
+            'produto'=> $produto,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        return view('site.editar-estoque',
+        [
+            'produtos' => Product::all(),
+            'estoque' => \App\Models\Stock::findOrFail($request->get('id')),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $stock = ModelStock::findOrFail($request->get('id'));
+
+        $stock->produto = strtok($request->produto, " ");
+        $stock->quantidade = $request->input('quantidade');
+
+        $stock->update();
+
+        return redirect('/estoque/');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        ModelStock::findOrFail($request->get('id'))->delete();
+        return redirect('/estoque/');
     }
 }

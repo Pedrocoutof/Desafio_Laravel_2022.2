@@ -26,7 +26,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/adm/estoque/">Estoque</a>
+                <a class="nav-link" href="/estoque/">Estoque</a>
             </li>
         </ul>
     </div>
