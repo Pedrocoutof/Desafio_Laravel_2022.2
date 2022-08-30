@@ -2,83 +2,88 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProductCreated;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+/*
+    public function home()
+    {
+        $products = Product::all();
+        return view('site.home')->with('products', $products);
+    }
+
+    public function adm_produtos(){
+    }
+*/
     public function index()
     {
-        //
+        $produtos = Product::all();
+        return view('site.lista-produtos')->with('produtos', $produtos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return redirect('/adm/produtos');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $produto = new Product();
+
+        $produto->name = $request->input('name');
+        $produto->flavor = $request->input('flavor');
+        $produto->price = $request->input('price');
+        $produto->description = $request->input('description');
+        $produto->photo = $request->input('photo');
+
+        $produto->save();
+
+        \App\Events\ProductCreated::dispatch($produto);
+        return redirect('/produtos');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+    public function delete(Request $request)
     {
-        //
+        $id = $request->get('id');
+        Product::findOrFail($id)->delete();
+        return redirect('/produtos/');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function show(Request $request)
     {
-        //
+        $products = Product::all();
+        $id = $request->get('id');
+
+        foreach ($products as $product){
+            if($product->id == $id){
+                return view('site.visualiza-produto')->with('produto', $product);
+            }
+        }
+
+        return 0;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateProductRequest $request, Product $product)
+
+    public function edit(Request $request)
     {
-        //
+        $produto = Product::findOrFail($request->get('id'));
+        return view('site.editar-produto')->with('produto', $produto);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
+    public function update(Request $request)
+    {
+        Product::findOrFail($request->get('id'))->update($request->all());
+        return redirect('/produtos/');
+    }
+
     public function destroy(Product $product)
     {
         //
