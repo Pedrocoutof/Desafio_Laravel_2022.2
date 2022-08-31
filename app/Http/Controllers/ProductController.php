@@ -80,7 +80,12 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-        Product::findOrFail($request->get('id'))->update($request->all());
+        $produto = Product::findOrFail($request->get('id'));
+        $produto->name = $request->input('name');
+        $produto->price = $request->input('price');
+        $produto->flavor = $request->input('flavor');
+        $produto->description = $request->input('description');
+        $produto->photo = $request->input('photo');
         return redirect('/produtos/');
     }
 

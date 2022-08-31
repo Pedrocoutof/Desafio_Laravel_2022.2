@@ -61,7 +61,15 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        User::findOrFail($request->get('id'))->update($request->all());
+        $user = User::findOrFail($request->get('id'));
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->permission = $request->input('permission');
+        $user->fidelity = $request->input('fidelity');
+
+        $user->save();
+
         return redirect ('/users/');
     }
 

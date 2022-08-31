@@ -20,7 +20,7 @@
         <label class='form-label' for="photo">Foto:</label>
         <input class='form-control' type='file' id='photo' name='photo' value="{{$produto->photo}}">
 
-        <button href='./../' type="cancel" class="btn btn-danger mb-3">Cancelar</button>
+        <a href='./../' type="cancel" class="btn btn-danger mb-3">Cancelar</a>
         <button href='#' type="submit" class="btn btn-primary mb-3">Enviar</button>
 
     </form>

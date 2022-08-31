@@ -11,13 +11,16 @@
         <label class='form-label' for="email">Email:</label>
         <input class='form-control' type='text' id='email' name='email' value="{{$user->email}}">
 
-        <label class='form-label' for="permission">Nível de permissão:</label>
-        <input class='form-control' type='text' id='permission' name='permission' value="{{$user->permission}}">
+            <label for="permission" class="form-label">Permissão:</label>
+            <select id="permission" name="permission" class="form-select">
+                <option>administrator</option>
+                <option>client</option>
+            </select>
 
         <label class='form-label' for="fidelity">Fidelidade:</label>
         <input class='form-control' type='text' id='fidelity' name='fidelity' value="{{$user->fidelity}}">
 
-        <button href='./../' type="cancel" class="btn btn-danger mb-3">Cancelar</button>
+        <a href='./../' type="cancel" class="btn btn-danger mb-3">Cancelar</a>
         <button href='#' type="submit" class="btn btn-primary mb-3">Enviar</button>
 
     </form>
