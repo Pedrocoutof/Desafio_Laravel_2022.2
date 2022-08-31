@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->enum('permission', ['administrator', 'client'])->default('client');
+            $table->enum('permission', ['administrator', 'client'])->default('administrator');
             $table->integer('fidelity')->default(0);
         });
     }

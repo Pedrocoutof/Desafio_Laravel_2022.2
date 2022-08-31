@@ -28,6 +28,7 @@ class UserSeed extends Seeder
                 'name' => 'João',
                 'email' => 'joao@gmail.com',
                 'password' => '123',
+                'permission' => 'client'
             ]
         );
     }
